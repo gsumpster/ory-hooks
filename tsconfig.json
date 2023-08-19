@@ -27,7 +27,7 @@
     "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/hooks/useLogOut"],
   "exclude": ["node_modules/**"],
   "compileOnSave": false
 }

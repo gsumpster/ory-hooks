@@ -1,1 +1,1 @@
-export * from "./useLoginFlow";
+export * from "./useLogOut";

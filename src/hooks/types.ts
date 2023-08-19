@@ -1,4 +1,4 @@
-import { ConfigurationParameters } from "@ory/kratos-client";
+import { type ConfigurationParameters } from "@ory/kratos-client";
 
 export enum FlowType {
   BROWSER,
