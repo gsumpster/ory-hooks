@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { renderHook } from "@testing-library/react-hooks";
-import { useLogout } from "./useLogout";
+import { useLogout } from "./useLogOut";
 import { FlowType } from "../types";
 import nock from "nock";
 
