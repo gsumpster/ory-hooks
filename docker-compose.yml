@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Database service
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: kratos
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: kratos
+    volumes:
+      - kratos_postgres_data:/var/lib/postgresql/data
+
+  # Ory Kratos service
+  kratos:
+    image: oryd/kratos:latest
+    depends_on:
+      - postgres
+    environment:
+      - DSN=postgres://kratos:secret@postgres:5432/kratos?sslmode=disable
+      - KRATOS_DATABASE_URL=postgres://kratos:secret@postgres:5432/kratos?sslmode=disable
+      - KRATOS_PUBLIC_URL=http://kratos:4433/
+      - KRATOS_ADMIN_URL=http://kratos:4434/
+      - KRATOS_UI_URL=http://selfservice:3000/
+      - KRATOS_COURIER_SMTP_CONNECTION_URI=smtp://your-smtp:password@localhost:1025/
+      - KRATOS_SECRET_KEY=supersecret
+      - LOG_LEVEL=debug
+    entrypoint: /etc/config/kratos/init.sh
+    ports:
+      - "4433:4433"  # Public API
+      - "4434:4434"  # Admin API
+    volumes:
+      - ./kratos:/etc/config/kratos  # Configure this path for your local config
+
+  # Mailcatcher (for testing email)
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"  # SMTP server
+      - "8025:8025"  # Web interface to view emails
+
+volumes:
+  kratos_postgres_data:
